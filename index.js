@@ -133,7 +133,6 @@ const View = (() => {
       });
     });
 
-    // Add to cart functionality
     document.querySelectorAll(".addToCart-btn").forEach((btn) => {
       btn.addEventListener("click", (event) => {
         const parentLi = event.target.closest("li");
@@ -142,7 +141,6 @@ const View = (() => {
         const selectedItem = items.find((item) => item.id == itemId);
 
 
-        // Add item to cart with the selected quantity
         model.cart = [
           ...model.cart,
           { ...selectedItem, amount: quantity },
@@ -169,7 +167,6 @@ const View = (() => {
     });
     cartEl.innerHTML = cartTemplate;
 
-    // Attach event listeners for increment and decrement buttons in cart
     document.querySelectorAll(".increment-btn").forEach((btn) => {
       btn.addEventListener("click", (event) => {
         const parentLi = event.target.closest("li");
@@ -177,7 +174,6 @@ const View = (() => {
         const item = items.find((item) => item.id == itemId);
         const newAmount = item.amount + 1;
 
-        // Update the quantity in the cart
         model.cart = model.cart.map((cartItem) =>
           cartItem.id === itemId ? { ...cartItem, amount: newAmount } : cartItem
         );
@@ -191,14 +187,12 @@ const View = (() => {
         const item = items.find((item) => item.id == itemId);
         const newAmount = item.amount > 1 ? item.amount - 1 : 1;
 
-        // Update the quantity in the cart
         model.cart = model.cart.map((cartItem) =>
           cartItem.id === itemId ? { ...cartItem, amount: newAmount } : cartItem
         );
       });
     });
 
-    // Handle delete button for cart items
     document.querySelectorAll(".deleteItem-btn").forEach((btn) => {
       btn.addEventListener("click", (event) => {
         const itemId = event.target.closest("li").id;
@@ -224,11 +218,6 @@ const Controller = ((model, view) => {
         const itemId = event.target.parentElement.id;
         const selectedItem = state.inventory.find(item => item.id == itemId);
         const quantity = parseInt(event.target.parentElement.querySelector(".quantity").innerText);
-        
-        if (quantity <= 0) {
-          alert("Please select a valid quantity.");
-          return;
-        }
   
         const existingCartItem = state.cart.find(item => item.id === selectedItem.id);
   
